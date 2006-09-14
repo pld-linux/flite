@@ -1,0 +1,22 @@
+--- flite-1.2-release/configure.in~	2006-09-14 22:11:21.000000000 +0200
++++ flite-1.2-release/configure.in	2006-09-14 22:13:09.000000000 +0200
+@@ -146,8 +146,7 @@
+ 	[  --with-audio          with specific audio support (none linux freebsd etc) ],
+         AUDIODRIVER=$with_audio )
+ 
+-if test "x$AUDIODEFS" = x; then
+-    case "$AUDIODRIVER" in
++case "$AUDIODRIVER" in
+ 	linux|oss)
+ 	    AUDIODRIVER=oss
+ 	    AUDIODEFS=-DCST_AUDIO_LINUX
+@@ -163,8 +162,7 @@
+ 	none)
+ 	    AUDIODEFS=-DCST_AUDIO_NONE
+ 	    ;;
+-    esac
+-fi
++esac
+ AC_SUBST(AUDIODRIVER)
+ AC_SUBST(AUDIODEFS)
+ AC_SUBST(AUDIOLIBS)
