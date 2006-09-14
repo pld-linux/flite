@@ -1,0 +1,31 @@
+--- flite-1.2-release/lib/Makefile.ark	2005-08-04 15:31:59.000000000 +0000
++++ flite-1.2-release/lib/Makefile	2005-08-04 15:32:16.000000000 +0000
+@@ -61,4 +61,4 @@
+ endif
+ 
+ install:
+-	@ tar cvf - $(ALL_LIBS) | ( cd $(INSTALLLIBDIR) && tar xf -)
++	@ tar cvf - $(ALL_LIBS) | ( cd $(DESTDIR)$(INSTALLLIBDIR) && tar xf -)
+--- flite-1.2-release/Makefile.ark	2005-08-04 15:31:16.000000000 +0000
++++ flite-1.2-release/Makefile	2005-08-04 15:31:57.000000000 +0000
+@@ -79,13 +79,13 @@
+ 
+ install:
+ 	@echo Installing 
+-	mkdir -p $(INSTALLBINDIR)
+-	mkdir -p $(INSTALLLIBDIR)
+-	mkdir -p $(INSTALLINCDIR)
+-	$(INSTALL) -m 644 include/*.h $(INSTALLINCDIR)
+-	@ $(MAKE) -C lib --no-print-directory install
+-	$(INSTALL) -m 755 bin/flite $(INSTALLBINDIR)
+-	$(INSTALL) -m 755 bin/flite_time $(INSTALLBINDIR)
++	mkdir -p $(DESTDIR)$(INSTALLBINDIR)
++	mkdir -p $(DESTDIR)$(INSTALLLIBDIR)
++	mkdir -p $(DESTDIR)$(INSTALLINCDIR)
++	$(INSTALL) -m 644 include/*.h $(DESTDIR)$(INSTALLINCDIR)
++	@ $(MAKE) -C lib --no-print-directory install DESTDIR="$(DESTDIR)"
++	$(INSTALL) -m 755 bin/flite $(DESTDIR)$(INSTALLBINDIR)
++	$(INSTALL) -m 755 bin/flite_time $(DESTDIR)$(INSTALLBINDIR)
+ 
+ time-stamp :
+ 	@ echo $(PROJECT_NAME) >.time-stamp

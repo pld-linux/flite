@@ -1,0 +1,161 @@
+--- flite-1.2-release.orig/doc/Makefile
++++ flite-1.2-release/doc/Makefile
+@@ -52,7 +52,8 @@
+ flite.html: flite.texi
+ 	@ if [ ! -d html ] ; \
+           then mkdir -p html ; fi
+-	(cd html; texi2html -number -split_chapter ../flite.texi)
++	(cd html; texi2html -number -split_chapter ../flite.texi; \
++	 mv flite/*.html .; rm -rf flite)
+ 	@ for i in html/*.html ; \
+ 	  do \
+ 	    sed 's/<BODY>/<BODY bgcolor="#ffffff">/' $$i >ttt.html; \
+--- flite-1.2-release.orig/doc/flite.texi
++++ flite-1.2-release/doc/flite.texi
+@@ -16,6 +16,11 @@
+ @set UPDATED 19th February 2003
+ 
+ @ifinfo
++@dircategory Miscellaneous
++@direntry
++* Festival Lite: (flite).     Lightweight Speech synthesis engine.
++@end direntry
++
+ This file documents @code{Flite}, a small, fast run-time speech
+ synthesis engine.
+ 
+@@ -510,7 +515,7 @@
+ distribution, the example diphone voice is @code{cmu_us_kal}.
+ 
+ Here is a simple C program that uses the flite library
+-@example
++@verbatim
+ #include "flite.h"
+ 
+ cst_voice *register_cmu_us_kal();
+@@ -532,7 +537,7 @@
+     flite_file_to_speech(argv[1],v,"play");
+ 
+ }
+-@end example
++@end verbatim
+ Assuming the shell variable FLITEDIR is set to the flite directory
+ the following will compile the system (with appropriate changes for
+ your platform if necessary).
+--- flite-1.2-release.orig/debian/flite.1
++++ flite-1.2-release/debian/flite.1
+@@ -0,0 +1,65 @@
++.TH FLITE 1 "February 25, 2003"
++.SH NAME
++flite \- A small simple speech synthesizer 
++.SH SYNOPSIS
++.B flite
++[\fIOPTION\fR]... \fITEXTFILE\fR [\fIWAVEFILE\fR]
++.SH DESCRIPTION
++This manual page documents briefly the
++.B flite
++command.
++This manual page was written for the Debian distribution
++because the original program does not have a manual page.
++Instead, it has documentation in /usr/share/doc/flite/
++.PP
++Converts text in TEXTFILE to a waveform in WAVEFILE.
++If text contains a space, it is treated as a literal
++textstring and spoken, and not as a file name.
++if WAVEFILE is unspecified or "play" the result is
++played on the current systems audio device.  If WAVEFILE
++is "none" the waveform is discarded (good for benchmarking)
++.SH OPTIONS
++.TP
++\fB\-\-version\fR
++Output \fBflite\fP version number.
++.TP
++\fB\-?\fR, \fB\-\-help\fR
++Output usage information.
++.TP
++\fB\-o\fR WAVEFILE
++Explicitly set output filename.
++.TP
++\fB\-f\fR TEXTFILE
++Explicitly set input filename.
++.TP
++\fB\-t\fR TEXT
++Explicitly set input text string.
++.TP
++\fB\-p\fR PHONES
++Explicitly set input text string and synthesize as phones.
++.TP
++\fB\-s\fR, \fB\-\-set\fR FEATURE=VALUE
++Set feature (guesses type).
++.TP
++\fB\-\-seti\fR FEATURE=VALUE
++Set int feature.
++.TP
++\fB\-\-setf\fR FEATURE=VALUE
++Set float feature.
++.TP
++\fB\-\-sets\fR FEATURE=VALUE
++Set string feature.
++.TP
++\fB\-b\fR
++Benchmark mode.
++.TP
++\fB\-l\fR
++Loop endlessly.
++.TP
++\fB\-v\fR
++Verbose output.
++.SH SEE ALSO
++.BR flite_time (1), " " t2p (1), " " festival (1)
++.SH AUTHOR
++This manual page was written by Mario Lang <mlang@debian.org>,
++for the Debian GNU/Linux system (but may be used by others).
+--- flite-1.2-release.orig/debian/t2p.1
++++ flite-1.2-release/debian/t2p.1
+@@ -0,0 +1,19 @@
++.TH T2P 1 "February 25, 2003"
++.SH NAME
++t2p \- A text to phoneme converter
++.SH SYNOPSIS
++.B t2p
++"word word word"
++.SH DESCRIPTION
++.B t2p
++converts text specified on the command-line into US english phonemes.
++Output is given to STDOUT.
++
++.SH OPTIONS
++No options.
++
++.SH SEE ALSO
++.BR flite (1), " " flite_time (1), " " festival (1)
++.SH AUTHOR
++This manual page was written by Mario Lang <mlang@debian.org>,
++for the Debian GNU/Linux system (but may be used by others).
+--- flite-1.2-release.orig/debian/flite_time.1
++++ flite-1.2-release/debian/flite_time.1
+@@ -0,0 +1,24 @@
++.TH FLITE_TIME 1 "February 25, 2003"
++.SH NAME
++flite_time \- A talking clock based on a limited-domain voice
++.SH SYNOPSIS
++.B flite_time
++.I HH:MM
++.SH DESCRIPTION
++.B flite_time
++is a example talking clock based on a limited domain
++voice from Festival Lite.
++
++.SH OPTIONS
++Specify the time you want to have announced at the
++command-line using the format HH:MM.
++
++.SH EXAMPLES
++.IP "flite_time `date +%H:%M`" 4
++Announce the current time.
++
++.SH SEE ALSO
++.BR flite (1), " " festival (1)
++.SH AUTHOR
++This manual page was written by Mario Lang <mlang@debian.org>,
++for the Debian GNU/Linux system (but may be used by others).
