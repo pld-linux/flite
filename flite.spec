@@ -1,6 +1,6 @@
 #
 # NOTE:	- building is memory consuming (up to c.a. 537MB)
-# TODO:	- review -link,-alsa, version patches
+# TODO:	- review -link, version patches
 #	- --disable-static doesn't work
 #	- install manpages via makefile
 #
@@ -9,7 +9,7 @@
 #
 Name:		flite
 Version:	1.2
-Release:	0.1
+Release:	0.2
 Summary:	flite - a small, fast speech synthesis engine
 Summary(ru_RU.KOI8-R):flite - маленькое, быстрое средство для синтеза речи
 License:	Custom, see COPYING
@@ -18,12 +18,13 @@ Source0:	http://www.speech.cs.cmu.edu/flite/packed/flite-1.2/%{name}-%{version}-
 # Source0-md5:	24c1576f5b3eb23ecedf4bebde96710f
 # ALT Linux patches:
 Patch0:		%{name}-link.patch
-Patch1:		%{name}-alsa.patch
-Patch2:		%{name}-DESTDIR.patch
-Patch3:		%{name}-fix-readonly-assignments.patch
+Patch1:		%{name}-fix-readonly-assignments.patch
 # Debian patches:
-Patch4:		%{name}-doc.patch
-Patch5:		%{name}-version.patch
+Patch2:		%{name}-doc.patch
+Patch3:		%{name}-version.patch
+#
+Patch4:		%{name}-DESTDIR.patch
+Patch5:		%{name}-fix-audiodriver-setup.patch
 URL:		http://cmuflite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -82,6 +83,7 @@ engine
 cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
+	--with-audio=oss \
 	--enable-shared \
 	%{!?with_static_libs:--disable-static} \
 	--with-vox=cmu_us_kal16
