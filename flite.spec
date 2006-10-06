@@ -7,11 +7,12 @@
 # Conditional build:
 %bcond_without	static_libs # don't pack static liraries
 #
+Summary:	flite - a small, fast speech synthesis engine
+Summary(pl):	flite - maЁy, szybki silnik syntezy mowy
+Summary(ru):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
 Version:	1.2
 Release:	0.2
-Summary:	flite - a small, fast speech synthesis engine
-Summary(ru_RU.KOI8-R):flite - маленькое, быстрое средство для синтеза речи
 License:	Custom, see COPYING
 Group:		Applications/Sound
 Source0:	http://www.speech.cs.cmu.edu/flite/packed/flite-1.2/%{name}-%{version}-release.tar.bz2
@@ -39,34 +40,50 @@ Carnegie Mellon University's FestVox project, tools, scripts and
 documentation for building synthetic voices. However, flite itself
 does not require either of these systems to compile and run.
 
-%description -l ru_RU.KOI8-R
+%description -l pl
+Flite to maЁy, szybki silnik syntezy mowy. Jest najnowszym dodatkiem
+do zestawu wolnodostЙpnych narzЙdzi do syntezy zawieraj╠cego system
+syntezy mowy Festival z University of Edinburgh, projekt FestVox z
+Carnegie Mellon University, narzЙdzia, skrypty i dokumentacjЙ
+tworzenia gЁosСw syntetycznych. Jednak sam flite nie wymaga ©adnego z
+tych systemСw do skompilowania czy uruchomienia.
+
+%description -l ru
 Flite -- маленькое, быстрое средство для синтеза речи. Это последнее
 добавление к набору свободного программного обеспечения для синтеза
 речи, проекты FestVox и Festival. Однако, сам flite не требует ни
 одного из этих пакетов для компиляции и запуска.
 
 %package devel
-Summary:	development files for flite
-Group:		Applications/Sound
+Summary:	Development files for flite
+Summary(pl):	Pliki programistyczne dla flite
+Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-development files for flite, a small, fast speech synthesis engine
+Development files for flite, a small, fast speech synthesis engine.
 
-%description devel -l ru_RU.KOI8-R
+%description devel -l pl
+Pliki programistyczne dla flite - maЁego, szybkiego silnika syntezy
+mowy.
+
+%description devel -l ru
 Файлы для разработки с использованием flite - маленького, быстрого
 средства для синтеза речи.
 
 %package static
-Summary:	static development files for flite
+Summary:	Static flite library
+Summary(pl):	Statyczna biblioteka flite
 Group:		Applications/Sound
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-static development files for flite, a small, fast speech synthesis
-engine
+Static library for flite, a small, fast speech synthesis engine.
 
-%description static -l ru_RU.KOI8-R
+%description static -l pl
+Statyczna biblioteka flite - maЁego, szybkiego silnika syntezy mowy.
+
+%description static -l ru
 Статические файлы для разработки с использованием flite - маленького,
 быстрого средства для синтеза речи.
 
@@ -115,8 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/*
 %attr(755,root,root) %{_libdir}/lib*.so
+%{_includedir}/*
 
 %if %{with static_libs}
 %files static
