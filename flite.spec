@@ -8,8 +8,8 @@
 %bcond_without	static_libs # don't pack static liraries
 #
 Summary:	flite - a small, fast speech synthesis engine
-Summary(pl.UTF-8):   flite - mały, szybki silnik syntezy mowy
-Summary(ru.UTF-8):   flite - маленькое, быстрое средство для синтеза речи
+Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
+Summary(ru.UTF-8):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
 Version:	1.2
 Release:	0.2
@@ -56,7 +56,7 @@ Flite -- маленькое, быстрое средство для синтез
 
 %package devel
 Summary:	Development files for flite
-Summary(pl.UTF-8):   Pliki programistyczne dla flite
+Summary(pl.UTF-8):	Pliki programistyczne dla flite
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -73,7 +73,7 @@ mowy.
 
 %package static
 Summary:	Static flite library
-Summary(pl.UTF-8):   Statyczna biblioteka flite
+Summary(pl.UTF-8):	Statyczna biblioteka flite
 Group:		Applications/Sound
 Requires:	%{name}-devel = %{version}-%{release}
 
