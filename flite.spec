@@ -8,8 +8,8 @@
 %bcond_without	static_libs # don't pack static liraries
 #
 Summary:	flite - a small, fast speech synthesis engine
-Summary(pl):	flite - maЁy, szybki silnik syntezy mowy
-Summary(ru):	flite - маленькое, быстрое средство для синтеза речи
+Summary(pl.UTF-8):   flite - maе┌y, szybki silnik syntezy mowy
+Summary(ru.UTF-8):   flite - п╪п╟п╩п╣п╫я▄п╨п╬п╣, п╠я▀я│я┌я─п╬п╣ я│я─п╣п╢я│я┌п╡п╬ п╢п╩я▐ я│п╦п╫я┌п╣п╥п╟ я─п╣я┤п╦
 Name:		flite
 Version:	1.2
 Release:	0.2
@@ -40,52 +40,52 @@ Carnegie Mellon University's FestVox project, tools, scripts and
 documentation for building synthetic voices. However, flite itself
 does not require either of these systems to compile and run.
 
-%description -l pl
-Flite to maЁy, szybki silnik syntezy mowy. Jest najnowszym dodatkiem
-do zestawu wolnodostЙpnych narzЙdzi do syntezy zawieraj╠cego system
+%description -l pl.UTF-8
+Flite to maе┌y, szybki silnik syntezy mowy. Jest najnowszym dodatkiem
+do zestawu wolnodostд≥pnych narzд≥dzi do syntezy zawierajд┘cego system
 syntezy mowy Festival z University of Edinburgh, projekt FestVox z
-Carnegie Mellon University, narzЙdzia, skrypty i dokumentacjЙ
-tworzenia gЁosСw syntetycznych. Jednak sam flite nie wymaga ©adnego z
-tych systemСw do skompilowania czy uruchomienia.
+Carnegie Mellon University, narzд≥dzia, skrypty i dokumentacjд≥
+tworzenia gе┌osцЁw syntetycznych. Jednak sam flite nie wymaga е╪adnego z
+tych systemцЁw do skompilowania czy uruchomienia.
 
-%description -l ru
-Flite -- маленькое, быстрое средство для синтеза речи. Это последнее
-добавление к набору свободного программного обеспечения для синтеза
-речи, проекты FestVox и Festival. Однако, сам flite не требует ни
-одного из этих пакетов для компиляции и запуска.
+%description -l ru.UTF-8
+Flite -- п╪п╟п╩п╣п╫я▄п╨п╬п╣, п╠я▀я│я┌я─п╬п╣ я│я─п╣п╢я│я┌п╡п╬ п╢п╩я▐ я│п╦п╫я┌п╣п╥п╟ я─п╣я┤п╦. п╜я┌п╬ п©п╬я│п╩п╣п╢п╫п╣п╣
+п╢п╬п╠п╟п╡п╩п╣п╫п╦п╣ п╨ п╫п╟п╠п╬я─я┐ я│п╡п╬п╠п╬п╢п╫п╬пЁп╬ п©я─п╬пЁя─п╟п╪п╪п╫п╬пЁп╬ п╬п╠п╣я│п©п╣я┤п╣п╫п╦я▐ п╢п╩я▐ я│п╦п╫я┌п╣п╥п╟
+я─п╣я┤п╦, п©я─п╬п╣п╨я┌я▀ FestVox п╦ Festival. п·п╢п╫п╟п╨п╬, я│п╟п╪ flite п╫п╣ я┌я─п╣п╠я┐п╣я┌ п╫п╦
+п╬п╢п╫п╬пЁп╬ п╦п╥ я█я┌п╦я┘ п©п╟п╨п╣я┌п╬п╡ п╢п╩я▐ п╨п╬п╪п©п╦п╩я▐я├п╦п╦ п╦ п╥п╟п©я┐я│п╨п╟.
 
 %package devel
 Summary:	Development files for flite
-Summary(pl):	Pliki programistyczne dla flite
+Summary(pl.UTF-8):   Pliki programistyczne dla flite
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Development files for flite, a small, fast speech synthesis engine.
 
-%description devel -l pl
-Pliki programistyczne dla flite - maЁego, szybkiego silnika syntezy
+%description devel -l pl.UTF-8
+Pliki programistyczne dla flite - maе┌ego, szybkiego silnika syntezy
 mowy.
 
-%description devel -l ru
-Файлы для разработки с использованием flite - маленького, быстрого
-средства для синтеза речи.
+%description devel -l ru.UTF-8
+п╓п╟п╧п╩я▀ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ flite - п╪п╟п╩п╣п╫я▄п╨п╬пЁп╬, п╠я▀я│я┌я─п╬пЁп╬
+я│я─п╣п╢я│я┌п╡п╟ п╢п╩я▐ я│п╦п╫я┌п╣п╥п╟ я─п╣я┤п╦.
 
 %package static
 Summary:	Static flite library
-Summary(pl):	Statyczna biblioteka flite
+Summary(pl.UTF-8):   Statyczna biblioteka flite
 Group:		Applications/Sound
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static library for flite, a small, fast speech synthesis engine.
 
-%description static -l pl
-Statyczna biblioteka flite - maЁego, szybkiego silnika syntezy mowy.
+%description static -l pl.UTF-8
+Statyczna biblioteka flite - maе┌ego, szybkiego silnika syntezy mowy.
 
-%description static -l ru
-Статические файлы для разработки с использованием flite - маленького,
-быстрого средства для синтеза речи.
+%description static -l ru.UTF-8
+п║я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ я└п╟п╧п╩я▀ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ flite - п╪п╟п╩п╣п╫я▄п╨п╬пЁп╬,
+п╠я▀я│я┌я─п╬пЁп╬ я│я─п╣п╢я│я┌п╡п╟ п╢п╩я▐ я│п╦п╫я┌п╣п╥п╟ я─п╣я┤п╦.
 
 %prep
 %setup -qn %{name}-%{version}-release
