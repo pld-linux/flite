@@ -1,0 +1,13 @@
+--- config/common_make_rules	2007-06-30 17:12:51.704645463 +0200
++++ config/common_make_rules-new	2007-06-30 17:13:34.736757907 +0200
+@@ -96,8 +96,8 @@
+ 	@ rm -f $@ $(LIBDIR)/$@.${PROJECT_VERSION} $(LIBDIR)/$@.${PROJECT_SHLIB_VERSION} 
+ 	@ (cd shared_os && ar x ../$<)
+ 	@ (cd shared_os && $(CC) -shared -Wl,-soname,$@.${PROJECT_SHLIB_VERSION} -Wl,-rpath-link -Wl,../ -L../ -o ../$@.${PROJECT_VERSION} *.os $($(@:lib%.so=%_LDLIBS)))
+-	@ ln -s $(LIBDIR)/$@.${PROJECT_VERSION} $(LIBDIR)/$@.${PROJECT_SHLIB_VERSION}
+-	@ ln -s $(LIBDIR)/$@.${PROJECT_SHLIB_VERSION} $(LIBDIR)/$@
++	@ ln -s $@.${PROJECT_VERSION} $@.${PROJECT_SHLIB_VERSION}
++	@ ln -s $@.${PROJECT_SHLIB_VERSION} $@
+ 	@ rm -rf shared_os
+ 
+ .make_build_dirs:
