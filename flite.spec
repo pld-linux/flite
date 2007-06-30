@@ -12,7 +12,7 @@ Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
 Summary(ru.UTF-8):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
 Version:	1.2
-Release:	0.2
+Release:	1	
 License:	Custom, see COPYING
 Group:		Applications/Sound
 Source0:	http://www.speech.cs.cmu.edu/flite/packed/flite-1.2/%{name}-%{version}-release.tar.bz2
@@ -105,14 +105,14 @@ cp -f /usr/share/automake/config.sub .
 	%{!?with_static_libs:--disable-static} \
 	--with-vox=cmu_us_kal16
 
-%{__make}
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
 # temp. workaround - put manpages in better place and install them via Makefile
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 
-%{__make} install \
+%{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install debian/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
