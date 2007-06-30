@@ -12,7 +12,7 @@ Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
 Summary(ru.UTF-8):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
 Version:	1.2
-Release:	1	
+Release:	2
 License:	Custom, see COPYING
 Group:		Applications/Sound
 Source0:	http://www.speech.cs.cmu.edu/flite/packed/flite-1.2/%{name}-%{version}-release.tar.bz2
@@ -128,6 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ACKNOWLEDGEMENTS README COPYING doc/html
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
+%ghost %attr(755,root,root) %{_libdir}/lib*.so.[0-9]
 %{_mandir}/man1/*.1*
 
 %files devel
