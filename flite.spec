@@ -31,6 +31,7 @@ URL:		http://cmuflite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	alsa-lib-devel
+BuildRequires:	tetex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
