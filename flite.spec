@@ -32,6 +32,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	alsa-lib-devel
 BuildRequires:	tetex
+BuildRequires:	texi2html
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
