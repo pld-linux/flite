@@ -133,7 +133,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ACKNOWLEDGEMENTS README COPYING doc/html
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%ghost %attr(755,root,root) %{_libdir}/lib*.so.[0-9]
+%attr(755,root,root) %ghost %{_libdir}/lib*.so.[0-9]
 %{_mandir}/man1/*.1*
 
 %files devel
