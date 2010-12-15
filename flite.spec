@@ -1,11 +1,6 @@
 #
 # NOTE:	- building is memory consuming (up to c.a. 537MB)
-# TODO:	- review -link, version patches
-#	- --disable-static doesn't work
-#	- install manpages via makefile
-#
-# Conditional build:
-%bcond_without	static_libs # don't pack static liraries
+# TODO:	- install manpages via makefile
 #
 Summary:	flite - a small, fast speech synthesis engine
 Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
@@ -107,19 +102,19 @@ cp -f /usr/share/automake/config.sub .
 %configure \
 	--with-audio=oss \
 	--enable-shared \
-	%{!?with_static_libs:--disable-static} \
 	--with-vox=cmu_us_kal16
 
 %{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
-# temp. workaround - put manpages in better place and install them via Makefile
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 
 %{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# omitted in make install
+install bin/t2p $RPM_BUILD_ROOT%{_bindir}
 install debian/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
@@ -130,19 +125,41 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ACKNOWLEDGEMENTS README COPYING doc/html
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/lib*.so.[0-9]
-%{_mandir}/man1/*.1*
+%doc ACKNOWLEDGEMENTS COPYING README doc/html
+%attr(755,root,root) %{_bindir}/flite
+%attr(755,root,root) %{_bindir}/flite_time
+%attr(755,root,root) %{_bindir}/t2p
+%attr(755,root,root) %{_libdir}/libflite.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_time_awb.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_time_awb.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_kal.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_us_kal.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_kal16.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_us_kal16.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmulex.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmulex.so.1
+%attr(755,root,root) %{_libdir}/libflite_usenglish.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_usenglish.so.1
+%{_mandir}/man1/flite.1*
+%{_mandir}/man1/flite_time.1*
+%{_mandir}/man1/t2p.1*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_includedir}/*
+%attr(755,root,root) %{_libdir}/libflite.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_time_awb.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_kal.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_kal16.so
+%attr(755,root,root) %{_libdir}/libflite_cmulex.so
+%attr(755,root,root) %{_libdir}/libflite_usenglish.so
+%{_includedir}/flite
 
-%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
-%endif
+%{_libdir}/libflite.a
+%{_libdir}/libflite_cmu_time_awb.a
+%{_libdir}/libflite_cmu_us_kal.a
+%{_libdir}/libflite_cmu_us_kal16.a
+%{_libdir}/libflite_cmulex.a
+%{_libdir}/libflite_usenglish.a

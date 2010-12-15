@@ -16,9 +16,9 @@
  @set UPDATED 19th February 2003
  
  @ifinfo
-+@dircategory Miscellaneous
++@dircategory Miscellaneous:
 +@direntry
-+* Festival Lite: (flite).     Lightweight Speech synthesis engine.
++* Festival Lite: (flite).		Lightweight Speech synthesis engine
 +@end direntry
 +
  This file documents @code{Flite}, a small, fast run-time speech
