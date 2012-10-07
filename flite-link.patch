@@ -1,29 +1,33 @@
---- flite-1.2-release/config/common_make_rules..mk	2003-02-18 19:17:21 +0300
-+++ flite-1.2-release/config/common_make_rules	2006-04-10 01:13:53 +0400
-@@ -52,7 +52,14 @@
- LIBDIR=$(TOP)/lib
+--- flite-1.4-release/config/common_make_rules.orig	2012-10-06 19:43:00.376818894 +0200
++++ flite-1.4-release/config/common_make_rules	2012-10-06 19:47:19.680146823 +0200
+@@ -68,8 +68,18 @@
  
- FLITELIBS = $(TOP)/lib/libflite.a
--LDFLAGS += -L$(TOP)/lib -lflite -lm $(AUDIOLIBS) $(OTHERLIBS)
-+LDFLAGS += -L$(TOP)/lib -lflite $(OTHERLIBS)
-+
-+flite_LDLIBS = $(AUDIOLIBS) -lm
-+flite_cmulex_LDLIBS = -lflite
-+flite_usenglish_LDLIBS = -lflite
-+flite_cmu_us_kal_LDLIBS = -lflite_cmulex -lflite_usenglish
-+flite_cmu_us_kal16_LDLIBS = -lflite_cmulex -lflite_usenglish
-+flite_cmu_time_awb_LDLIBS = -lflite -lflite_cmulex -lflite_usenglish
+ FLITELIBS = $(BUILDDIR)/lib/libflite.a
+ FLITELIBFLAGS = -L$(BUILDDIR)/lib -lflite 
+-LDFLAGS += -lm $(AUDIOLIBS) $(OTHERLIBS)
++LDFLAGS += -lm $(OTHERLIBS)
  
++libflite_LDLIBS = $(AUDIOLIBS) -lm
++libflite_cmulex_LDLIBS = -lflite
++libflite_usenglish_LDLIBS = -lflite
++libflite_cmu_us_awb_LDLIBS = -lflite_cmulex -lflite_usenglish -lflite
++libflite_cmu_us_kal_LDLIBS = -lflite_cmulex -lflite_usenglish -lflite
++libflite_cmu_us_kal16_LDLIBS = -lflite_cmulex -lflite_usenglish -lflite
++libflite_cmu_us_rms_LDLIBS = -lflite_cmulex -lflite_usenglish -lflite
++libflite_cmu_us_slt_LDLIBS = -lflite_cmulex -lflite_usenglish -lflite
++libflite_cmu_time_awb_LDLIBS = -lflite -lflite_cmulex -lflite_usenglish -lflite
++ 
+ FULLOBJS = $(OBJS:%=$(OBJDIR)/%)
  ifdef SHFLAGS
  SOOBJS = $(OBJS:.o=.os)
-@@ -88,7 +95,7 @@
+@@ -123,7 +133,7 @@
  	@ rm -rf shared_os && mkdir shared_os
- 	@ rm -f $@ $(LIBDIR)/$@.${PROJECT_VERSION} $(LIBDIR)/$@.${PROJECT_SHLIB_VERSION} 
+ 	@ rm -f $@ $@.${PROJECT_VERSION} $@.${PROJECT_SHLIB_VERSION} 
  	@ (cd shared_os && ar x ../$<)
--	@ (cd shared_os && $(CC) -shared -Wl,-soname,$@.${PROJECT_SHLIB_VERSION} -o ../$@.${PROJECT_VERSION} *.os)
-+	@ (cd shared_os && $(CC) -shared -Wl,-soname,$@.${PROJECT_SHLIB_VERSION} -Wl,-rpath-link -Wl,../ -L../ -o ../$@.${PROJECT_VERSION} *.os $($(@:lib%.so=%_LDLIBS)))
- 	@ ln -s $(LIBDIR)/$@.${PROJECT_VERSION} $(LIBDIR)/$@.${PROJECT_SHLIB_VERSION}
- 	@ ln -s $(LIBDIR)/$@.${PROJECT_SHLIB_VERSION} $(LIBDIR)/$@
+-	@ (cd shared_os && $(CC) -shared -Wl,-soname,`basename $@`.${PROJECT_SHLIB_VERSION} -o ../$@.${PROJECT_VERSION} *.os)
++	(cd shared_os && $(CC) -shared -Wl,-soname,`basename $@`.${PROJECT_SHLIB_VERSION} -Wl,-rpath-link=../$(dir $@) -L../$(dir $@) -o ../$@.${PROJECT_VERSION} *.os $($(patsubst %.so,%_LDLIBS,$(notdir $@))))
+ 	@ (cd $(LIBDIR) && ln -s `basename $@.${PROJECT_VERSION}` `basename $@.${PROJECT_SHLIB_VERSION}` )
+ 	@ (cd $(LIBDIR) && ln -s `basename $@.${PROJECT_SHLIB_VERSION}` `basename $@` )
  	@ rm -rf shared_os
 --- flite-1.2-release/doc/Makefile..mk	2002-12-30 15:57:30 +0300
 +++ flite-1.2-release/doc/Makefile	2006-04-10 01:12:41 +0400
@@ -36,30 +40,46 @@
  
  include $(TOP)/config/common_make_rules
  
---- flite-1.2-release/main/Makefile..mk	2003-02-20 01:17:31 +0300
-+++ flite-1.2-release/main/Makefile	2006-04-10 01:12:41 +0400
-@@ -49,11 +49,11 @@
-       $(BINDIR)/t2p$(EXEEXT)
+--- flite-1.4-release/main/Makefile.orig	2012-10-06 19:43:00.376818894 +0200
++++ flite-1.4-release/main/Makefile	2012-10-06 19:49:58.660143508 +0200
+@@ -51,9 +51,9 @@
+ VOICES=$(VOXES)
+ VOICELIBS=$(VOICES:%=flite_%)
  
- flite_LIBS = flite_$(FL_VOX) flite_$(FL_LANG) flite_$(FL_LEX) 
+-flite_LIBS = $(VOICELIBS) $(LANGS:%=flite_%) $(LEXES:%=flite_%) flite
++flite_LIBS = flite $(LEXES:%=flite_%) $(LANGS:%=flite_%) $(VOICELIBS)
+ 
 -flite_LIBS_flags = -L$(LIBDIR) $(flite_LIBS:%=-l%)
-+flite_LIBS_flags = -L$(LIBDIR) -Wl,-rpath-link -Wl,$(LIBDIR) $(flite_LIBS:%=-l%)
++flite_LIBS_flags = -L$(LIBDIR) -Wl,-rpath-link=$(LIBDIR) $(flite_LIBS:%=-l%)
  flite_LIBS_deps = $(flite_LIBS:%=$(LIBDIR)/lib%.a)
  
- flite_time_LIBS = flite_cmu_time_awb flite_$(FL_LANG) flite_$(FL_LEX)
+ include $(TOP)/config/common_make_rules
+@@ -66,7 +66,7 @@
+                     $(SHAREDLIBS:%=%.${PROJECT_SHLIB_VERSION})
+ 
+ flite_time_LIBS = flite_cmu_time_awb flite_usenglish flite_cmulex
 -flite_time_LIBS_flags = -L$(LIBDIR) $(flite_time_LIBS:%=-l%)
-+flite_time_LIBS_flags = -L$(LIBDIR) -Wl,-rpath-link -Wl,$(LIBDIR) $(flite_time_LIBS:%=-l%)
++flite_time_LIBS_flags = -L$(LIBDIR) -Wl,-rpath-link=$(LIBDIR) $(flite_time_LIBS:%=-l%)
  flite_time_LIBS_deps = $(flite_time_LIBS:%=$(LIBDIR)/lib%.a)
  
- include $(TOP)/config/common_make_rules
---- flite-1.2-release/Makefile..mk	2003-02-17 18:14:05 +0300
-+++ flite-1.2-release/Makefile	2006-04-10 01:15:02 +0400
-@@ -41,7 +41,7 @@
- ###########################################################################
+ LOCAL_CLEAN = $(BINDIR)/flite$(EXEEXT) $(BINDIR)/flite_time$(EXEEXT) \
+--- flite-1.4-release/Makefile.orig	2012-10-07 07:35:22.675928010 +0200
++++ flite-1.4-release/Makefile	2012-10-07 07:46:58.442580177 +0200
+@@ -43,7 +43,7 @@
  TOP=.
- DIRNAME=.
--BUILD_DIRS = include src lang lib tools doc main
-+BUILD_DIRS = include src lang lib main doc
- ALL_DIRS=config $(BUILD_DIRS) testsuite sapi
+ DIRNAME=
+ BUILD_DIRS = include src lang doc
+-ALL_DIRS=config $(BUILD_DIRS) testsuite sapi palm wince windows tools main
++ALL_DIRS=config $(BUILD_DIRS) testsuite sapi palm wince windows main tools
  CONFIG=configure configure.in config.sub config.guess \
         missing install-sh mkinstalldirs
+ WINDOWS = Exports.def flite.sln fliteDll.vcproj
+@@ -51,7 +51,7 @@
+ DIST_CLEAN = config.cache config.log config.status \
+ 		config/config config/system.mak FileList
+ 
+-HOST_ONLY_DIRS = tools main
++HOST_ONLY_DIRS = main tools
+ ALL = $(BUILD_DIRS)
+ 
+ config_dummy := $(shell test -f config/config || ( echo '*** '; echo '*** Making default config file ***'; echo '*** '; ./configure; )  >&2)

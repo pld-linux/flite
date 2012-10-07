@@ -2,16 +2,19 @@
 # NOTE:	- building is memory consuming (up to c.a. 537MB)
 # TODO:	- install manpages via makefile
 #
+# Conditional build:
+%bcond_without	alsa	# ALSA audio driver (OSS otherwise)
+#
 Summary:	flite - a small, fast speech synthesis engine
 Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
 Summary(ru.UTF-8):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
-Version:	1.2
-Release:	3
+Version:	1.4
+Release:	1
 License:	Custom, see COPYING
 Group:		Applications/Sound
-Source0:	http://www.speech.cs.cmu.edu/flite/packed/flite-1.2/%{name}-%{version}-release.tar.bz2
-# Source0-md5:	24c1576f5b3eb23ecedf4bebde96710f
+Source0:	http://www.speech.cs.cmu.edu/flite/packed/flite-1.4/%{name}-%{version}-release.tar.bz2
+# Source0-md5:	b7c3523b3bbc6f29ce61e6650cd9a428
 # ALT Linux patches:
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-fix-readonly-assignments.patch
@@ -21,11 +24,10 @@ Patch3:		%{name}-version.patch
 #
 Patch4:		%{name}-DESTDIR.patch
 Patch5:		%{name}-fix-audiodriver-setup.patch
-Patch6:		%{name}-so_link.patch
 URL:		http://cmuflite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	alsa-lib-devel
+%{?with_alsa:BuildRequires:	alsa-lib-devel}
 BuildRequires:	ed
 BuildRequires:	tetex
 BuildRequires:	texi2html
@@ -94,14 +96,13 @@ Statyczna biblioteka flite - małego, szybkiego silnika syntezy mowy.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p0
 
 %build
 cp -f /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
-	--with-audio=oss \
 	--enable-shared \
+	--with-audio=%{?with_alsa:alsa}%{!?with_alsa:oss} \
 	--with-vox=cmu_us_kal16
 
 %{__make} -j1
@@ -127,16 +128,28 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ACKNOWLEDGEMENTS COPYING README doc/html
 %attr(755,root,root) %{_bindir}/flite
+%attr(755,root,root) %{_bindir}/flite_cmu_time_awb
+%attr(755,root,root) %{_bindir}/flite_cmu_us_awb
+%attr(755,root,root) %{_bindir}/flite_cmu_us_kal
+%attr(755,root,root) %{_bindir}/flite_cmu_us_kal16
+%attr(755,root,root) %{_bindir}/flite_cmu_us_rms
+%attr(755,root,root) %{_bindir}/flite_cmu_us_slt
 %attr(755,root,root) %{_bindir}/flite_time
 %attr(755,root,root) %{_bindir}/t2p
 %attr(755,root,root) %{_libdir}/libflite.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libflite.so.1
 %attr(755,root,root) %{_libdir}/libflite_cmu_time_awb.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libflite_cmu_time_awb.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_awb.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_us_awb.so.1
 %attr(755,root,root) %{_libdir}/libflite_cmu_us_kal.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libflite_cmu_us_kal.so.1
 %attr(755,root,root) %{_libdir}/libflite_cmu_us_kal16.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libflite_cmu_us_kal16.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_rms.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_us_rms.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_slt.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_us_slt.so.1
 %attr(755,root,root) %{_libdir}/libflite_cmulex.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libflite_cmulex.so.1
 %attr(755,root,root) %{_libdir}/libflite_usenglish.so.*.*
@@ -149,8 +162,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libflite.so
 %attr(755,root,root) %{_libdir}/libflite_cmu_time_awb.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_awb.so
 %attr(755,root,root) %{_libdir}/libflite_cmu_us_kal.so
 %attr(755,root,root) %{_libdir}/libflite_cmu_us_kal16.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_rms.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_us_slt.so
 %attr(755,root,root) %{_libdir}/libflite_cmulex.so
 %attr(755,root,root) %{_libdir}/libflite_usenglish.so
 %{_includedir}/flite
@@ -159,7 +175,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libflite.a
 %{_libdir}/libflite_cmu_time_awb.a
+%{_libdir}/libflite_cmu_us_awb.a
 %{_libdir}/libflite_cmu_us_kal.a
 %{_libdir}/libflite_cmu_us_kal16.a
+%{_libdir}/libflite_cmu_us_rms.a
+%{_libdir}/libflite_cmu_us_slt.a
 %{_libdir}/libflite_cmulex.a
 %{_libdir}/libflite_usenglish.a

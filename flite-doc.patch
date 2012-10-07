@@ -1,19 +1,7 @@
---- flite-1.2-release.orig/doc/Makefile
-+++ flite-1.2-release/doc/Makefile
-@@ -52,7 +52,8 @@
- flite.html: flite.texi
- 	@ if [ ! -d html ] ; \
-           then mkdir -p html ; fi
--	(cd html; texi2html -number -split_chapter ../flite.texi)
-+	(cd html; texi2html -number -split_chapter ../flite.texi; \
-+	 mv flite/*.html .; rm -rf flite)
- 	@ for i in html/*.html ; \
- 	  do \
- 	    sed 's/<BODY>/<BODY bgcolor="#ffffff">/' $$i >ttt.html; \
---- flite-1.2-release.orig/doc/flite.texi
-+++ flite-1.2-release/doc/flite.texi
+--- flite-1.4-release/doc/flite.texi.orig	2009-12-29 17:19:14.000000000 +0100
++++ flite-1.4-release/doc/flite.texi	2012-10-06 12:47:11.377338909 +0200
 @@ -16,6 +16,11 @@
- @set UPDATED 19th February 2003
+ @set UPDATED 4th January 2009
  
  @ifinfo
 +@dircategory Miscellaneous:
@@ -24,7 +12,7 @@
  This file documents @code{Flite}, a small, fast run-time speech
  synthesis engine.
  
-@@ -510,7 +515,7 @@
+@@ -781,7 +786,7 @@
  distribution, the example diphone voice is @code{cmu_us_kal}.
  
  Here is a simple C program that uses the flite library
@@ -32,11 +20,11 @@
 +@verbatim
  #include "flite.h"
  
- cst_voice *register_cmu_us_kal();
-@@ -532,7 +537,7 @@
+ register_cmu_us_kal();
+@@ -803,7 +808,7 @@
      flite_file_to_speech(argv[1],v,"play");
  
- }
+ @}
 -@end example
 +@end verbatim
  Assuming the shell variable FLITEDIR is set to the flite directory
