@@ -10,7 +10,7 @@ Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
 Summary(ru.UTF-8):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
 Version:	1.4
-Release:	1
+Release:	2
 License:	Custom, see COPYING
 Group:		Applications/Sound
 Source0:	http://www.speech.cs.cmu.edu/flite/packed/flite-1.4/%{name}-%{version}-release.tar.bz2
@@ -24,6 +24,7 @@ Patch3:		%{name}-version.patch
 #
 Patch4:		%{name}-DESTDIR.patch
 Patch5:		%{name}-fix-audiodriver-setup.patch
+Patch6:		texinfo5.patch
 URL:		http://cmuflite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -96,6 +97,7 @@ Statyczna biblioteka flite - małego, szybkiego silnika syntezy mowy.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
