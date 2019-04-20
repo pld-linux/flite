@@ -9,12 +9,12 @@ Summary:	flite - a small, fast speech synthesis engine
 Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
 Summary(ru.UTF-8):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
-Version:	1.4
-Release:	2
+Version:	2.1
+Release:	1
 License:	Custom, see COPYING
 Group:		Applications/Sound
-Source0:	http://www.speech.cs.cmu.edu/flite/packed/flite-1.4/%{name}-%{version}-release.tar.bz2
-# Source0-md5:	b7c3523b3bbc6f29ce61e6650cd9a428
+Source0:	http://www.festvox.org/flite/packed/flite-2.1/%{name}-%{version}-release.tar.bz2
+# Source0-md5:	915ac91068fc962f4a0e8aa26164cc8a
 # ALT Linux patches:
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-fix-readonly-assignments.patch
@@ -22,7 +22,6 @@ Patch1:		%{name}-fix-readonly-assignments.patch
 Patch2:		%{name}-doc.patch
 Patch3:		%{name}-version.patch
 #
-Patch4:		%{name}-DESTDIR.patch
 Patch5:		%{name}-fix-audiodriver-setup.patch
 Patch6:		texinfo5.patch
 URL:		http://cmuflite.org/
@@ -95,7 +94,6 @@ Statyczna biblioteka flite - małego, szybkiego silnika syntezy mowy.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 
@@ -128,7 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ACKNOWLEDGEMENTS COPYING README doc/html
+%doc ACKNOWLEDGEMENTS COPYING README.md doc/html
 %attr(755,root,root) %{_bindir}/flite
 %attr(755,root,root) %{_bindir}/flite_cmu_time_awb
 %attr(755,root,root) %{_bindir}/flite_cmu_us_awb
@@ -140,6 +138,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/t2p
 %attr(755,root,root) %{_libdir}/libflite.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libflite.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_grapheme_lang.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_grapheme_lang.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_grapheme_lex.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_grapheme_lex.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_indic_lang.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_indic_lang.so.1
+%attr(755,root,root) %{_libdir}/libflite_cmu_indic_lex.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libflite_cmu_indic_lex.so.1
 %attr(755,root,root) %{_libdir}/libflite_cmu_time_awb.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libflite_cmu_time_awb.so.1
 %attr(755,root,root) %{_libdir}/libflite_cmu_us_awb.so.*.*
@@ -163,6 +169,10 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libflite.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_grapheme_lang.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_grapheme_lex.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_indic_lang.so
+%attr(755,root,root) %{_libdir}/libflite_cmu_indic_lex.so
 %attr(755,root,root) %{_libdir}/libflite_cmu_time_awb.so
 %attr(755,root,root) %{_libdir}/libflite_cmu_us_awb.so
 %attr(755,root,root) %{_libdir}/libflite_cmu_us_kal.so
@@ -176,6 +186,10 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libflite.a
+%{_libdir}/libflite_cmu_grapheme_lang.a
+%{_libdir}/libflite_cmu_grapheme_lex.a
+%{_libdir}/libflite_cmu_indic_lang.a
+%{_libdir}/libflite_cmu_indic_lex.a
 %{_libdir}/libflite_cmu_time_awb.a
 %{_libdir}/libflite_cmu_us_awb.a
 %{_libdir}/libflite_cmu_us_kal.a
