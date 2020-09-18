@@ -1,5 +1,5 @@
---- flite-1.4-release/config/common_make_rules.orig	2012-10-06 19:43:00.376818894 +0200
-+++ flite-1.4-release/config/common_make_rules	2012-10-06 19:47:19.680146823 +0200
+--- flite-2.2/config/common_make_rules.orig	2020-08-13 02:17:09.000000000 +0200
++++ flite-2.2/config/common_make_rules	2020-09-18 18:53:43.009784438 +0200
 @@ -68,8 +68,22 @@
  
  FLITELIBS = $(BUILDDIR)/lib/libflite.a
@@ -24,12 +24,12 @@
  FULLOBJS = $(OBJS:%=$(OBJDIR)/%)
  ifdef SHFLAGS
  SOOBJS = $(OBJS:.o=.os)
-@@ -123,7 +133,7 @@
+@@ -123,7 +137,7 @@
  	@ rm -rf shared_os && mkdir shared_os
  	@ rm -f $@ $@.${PROJECT_VERSION} $@.${PROJECT_SHLIB_VERSION} 
  	@ (cd shared_os && ar x ../$<)
--	@ (cd shared_os && $(CC) -shared -Wl,-soname,`basename $@`.${PROJECT_SHLIB_VERSION} -o ../$@.${PROJECT_VERSION} *.os)
-+	(cd shared_os && $(CC) -shared -Wl,-soname,`basename $@`.${PROJECT_SHLIB_VERSION} -Wl,-rpath-link=../$(dir $@) -L../$(dir $@) -o ../$@.${PROJECT_VERSION} *.os $($(patsubst %.so,%_LDLIBS,$(notdir $@))))
+-	@ (cd shared_os && $(CC) -shared -Wl,-soname,`basename $@`.${PROJECT_SHLIB_VERSION} -o ../$@.${PROJECT_VERSION} *.os $(LDFLAGS))
++	(cd shared_os && $(CC) -shared -Wl,-soname,`basename $@`.${PROJECT_SHLIB_VERSION} -Wl,-rpath-link=../$(dir $@) -L../$(dir $@) -o ../$@.${PROJECT_VERSION} *.os $(LDFLAGS)  $($(patsubst %.so,%_LDLIBS,$(notdir $@))))
  	@ (cd $(LIBDIR) && ln -s `basename $@.${PROJECT_VERSION}` `basename $@.${PROJECT_SHLIB_VERSION}` )
  	@ (cd $(LIBDIR) && ln -s `basename $@.${PROJECT_SHLIB_VERSION}` `basename $@` )
  	@ rm -rf shared_os
@@ -44,21 +44,23 @@
  
  include $(TOP)/config/common_make_rules
  
---- flite-1.4-release/main/Makefile.orig	2012-10-06 19:43:00.376818894 +0200
-+++ flite-1.4-release/main/Makefile	2012-10-06 19:49:58.660143508 +0200
-@@ -51,9 +51,9 @@
+--- flite-2.2/main/Makefile.orig	2020-08-13 02:17:09.000000000 +0200
++++ flite-2.2/main/Makefile	2020-09-18 19:06:56.732151141 +0200
+@@ -54,10 +54,10 @@
  VOICES=$(VOXES)
  VOICELIBS=$(VOICES:%=flite_%)
  
--flite_LIBS = $(VOICELIBS) $(LANGS:%=flite_%) $(LEXES:%=flite_%) flite
-+flite_LIBS = flite $(LEXES:%=flite_%) $(LANGS:%=flite_%) $(VOICELIBS)
+-flite_MODS = $(VOICELIBS) $(LANGS:%=flite_%) $(LEXES:%=flite_%) 
+-flite_LIBS = $(flite_MODS) flite
++flite_MODS = $(LEXES:%=flite_%) $(LANGS:%=flite_%)  $(VOICELIBS)
++flite_LIBS = flite $(flite_MODS)
  
 -flite_LIBS_flags = -L$(LIBDIR) $(flite_LIBS:%=-l%)
 +flite_LIBS_flags = -L$(LIBDIR) -Wl,-rpath-link=$(LIBDIR) $(flite_LIBS:%=-l%)
  flite_LIBS_deps = $(flite_LIBS:%=$(LIBDIR)/lib%.a)
  
  include $(TOP)/config/common_make_rules
-@@ -66,7 +66,7 @@
+@@ -74,7 +74,7 @@
                      $(SHAREDLIBS:%=%.${PROJECT_SHLIB_VERSION})
  
  flite_time_LIBS = flite_cmu_time_awb flite_usenglish flite_cmulex

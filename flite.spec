@@ -9,12 +9,13 @@ Summary:	flite - a small, fast speech synthesis engine
 Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
 Summary(ru.UTF-8):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
-Version:	2.1
+Version:	2.2
 Release:	1
 License:	Custom, see COPYING
 Group:		Applications/Sound
-Source0:	http://www.festvox.org/flite/packed/flite-2.1/%{name}-%{version}-release.tar.bz2
-# Source0-md5:	915ac91068fc962f4a0e8aa26164cc8a
+#Source0Download: https://github.com/festvox/flite/releases
+Source0:	https://github.com/festvox/flite/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	31f84ece0078906780f07942c0cd978c
 # ALT Linux patches:
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-fix-readonly-assignments.patch
@@ -23,8 +24,7 @@ Patch2:		%{name}-doc.patch
 Patch3:		%{name}-version.patch
 #
 Patch5:		%{name}-fix-audiodriver-setup.patch
-Patch6:		texinfo5.patch
-URL:		http://cmuflite.org/
+URL:		http://www.festvox.org/flite/
 BuildRequires:	autoconf
 BuildRequires:	automake
 %{?with_alsa:BuildRequires:	alsa-lib-devel}
@@ -89,13 +89,12 @@ Statyczna biblioteka flite - małego, szybkiego silnika syntezy mowy.
 быстрого средства для синтеза речи.
 
 %prep
-%setup -qn %{name}-%{version}-release
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -116,7 +115,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/man1
 
 # omitted in make install
 install bin/t2p $RPM_BUILD_ROOT%{_bindir}
-install debian/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
+cp -p debian/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
