@@ -1,37 +1,6 @@
---- flite-1.4-release/doc/flite.texi.orig	2009-12-29 17:19:14.000000000 +0100
-+++ flite-1.4-release/doc/flite.texi	2012-10-06 12:47:11.377338909 +0200
-@@ -16,6 +16,11 @@
- @set UPDATED 4th January 2009
- 
- @ifinfo
-+@dircategory Miscellaneous:
-+@direntry
-+* Festival Lite: (flite).		Lightweight Speech synthesis engine
-+@end direntry
-+
- This file documents @code{Flite}, a small, fast run-time speech
- synthesis engine.
- 
-@@ -781,7 +786,7 @@
- distribution, the example diphone voice is @code{cmu_us_kal}.
- 
- Here is a simple C program that uses the flite library
--@example
-+@verbatim
- #include "flite.h"
- 
- register_cmu_us_kal();
-@@ -803,7 +808,7 @@
-     flite_file_to_speech(argv[1],v,"play");
- 
- @}
--@end example
-+@end verbatim
- Assuming the shell variable FLITEDIR is set to the flite directory
- the following will compile the system (with appropriate changes for
- your platform if necessary).
---- flite-1.2-release.orig/debian/flite.1
-+++ flite-1.2-release/debian/flite.1
+diff -urNp -x '*.orig' flite-2.2.org/debian/flite.1 flite-2.2/debian/flite.1
+--- flite-2.2.org/debian/flite.1	1970-01-01 01:00:00.000000000 +0100
++++ flite-2.2/debian/flite.1	2024-12-07 13:22:05.229828583 +0100
 @@ -0,0 +1,65 @@
 +.TH FLITE 1 "February 25, 2003"
 +.SH NAME
@@ -98,30 +67,9 @@
 +.SH AUTHOR
 +This manual page was written by Mario Lang <mlang@debian.org>,
 +for the Debian GNU/Linux system (but may be used by others).
---- flite-1.2-release.orig/debian/t2p.1
-+++ flite-1.2-release/debian/t2p.1
-@@ -0,0 +1,19 @@
-+.TH T2P 1 "February 25, 2003"
-+.SH NAME
-+t2p \- A text to phoneme converter
-+.SH SYNOPSIS
-+.B t2p
-+"word word word"
-+.SH DESCRIPTION
-+.B t2p
-+converts text specified on the command-line into US english phonemes.
-+Output is given to STDOUT.
-+
-+.SH OPTIONS
-+No options.
-+
-+.SH SEE ALSO
-+.BR flite (1), " " flite_time (1), " " festival (1)
-+.SH AUTHOR
-+This manual page was written by Mario Lang <mlang@debian.org>,
-+for the Debian GNU/Linux system (but may be used by others).
---- flite-1.2-release.orig/debian/flite_time.1
-+++ flite-1.2-release/debian/flite_time.1
+diff -urNp -x '*.orig' flite-2.2.org/debian/flite_time.1 flite-2.2/debian/flite_time.1
+--- flite-2.2.org/debian/flite_time.1	1970-01-01 01:00:00.000000000 +0100
++++ flite-2.2/debian/flite_time.1	2024-12-07 13:22:05.229828583 +0100
 @@ -0,0 +1,24 @@
 +.TH FLITE_TIME 1 "February 25, 2003"
 +.SH NAME
@@ -147,3 +95,59 @@
 +.SH AUTHOR
 +This manual page was written by Mario Lang <mlang@debian.org>,
 +for the Debian GNU/Linux system (but may be used by others).
+diff -urNp -x '*.orig' flite-2.2.org/debian/t2p.1 flite-2.2/debian/t2p.1
+--- flite-2.2.org/debian/t2p.1	1970-01-01 01:00:00.000000000 +0100
++++ flite-2.2/debian/t2p.1	2024-12-07 13:22:05.229828583 +0100
+@@ -0,0 +1,19 @@
++.TH T2P 1 "February 25, 2003"
++.SH NAME
++t2p \- A text to phoneme converter
++.SH SYNOPSIS
++.B t2p
++"word word word"
++.SH DESCRIPTION
++.B t2p
++converts text specified on the command-line into US english phonemes.
++Output is given to STDOUT.
++
++.SH OPTIONS
++No options.
++
++.SH SEE ALSO
++.BR flite (1), " " flite_time (1), " " festival (1)
++.SH AUTHOR
++This manual page was written by Mario Lang <mlang@debian.org>,
++for the Debian GNU/Linux system (but may be used by others).
+diff -urNp -x '*.orig' flite-2.2.org/doc/flite.texi flite-2.2/doc/flite.texi
+--- flite-2.2.org/doc/flite.texi	2020-08-13 02:17:09.000000000 +0200
++++ flite-2.2/doc/flite.texi	2024-12-07 13:22:05.229828583 +0100
+@@ -16,6 +16,11 @@
+ @set UPDATED 18th November 2014
+ 
+ @ifinfo
++@dircategory Miscellaneous:
++@direntry
++* Festival Lite: (flite).		Lightweight Speech synthesis engine
++@end direntry
++
+ This file documents @code{Flite}, a small, fast run-time speech
+ synthesis engine.
+ 
+@@ -811,7 +816,7 @@ returned by the voice registration funct
+ distribution, the example diphone voice is @code{cmu_us_kal}.
+ 
+ Here is a simple C program that uses the flite library
+-@example
++@verbatim
+ #include "flite.h"
+ 
+ cst_voice * register_cmu_us_kal(const char *voxdir);
+@@ -833,7 +838,7 @@ int main(int argc, char **argv)
+     flite_file_to_speech(argv[1],v,"play");
+ 
+ @}
+-@end example
++@end verbatim
+ Assuming the shell variable FLITEDIR is set to the flite directory
+ the following will compile the system (with appropriate changes for
+ your platform if necessary).
