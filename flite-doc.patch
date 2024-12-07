@@ -1,6 +1,6 @@
 diff -urNp -x '*.orig' flite-2.2.org/debian/flite.1 flite-2.2/debian/flite.1
 --- flite-2.2.org/debian/flite.1	1970-01-01 01:00:00.000000000 +0100
-+++ flite-2.2/debian/flite.1	2024-12-07 13:22:05.229828583 +0100
++++ flite-2.2/debian/flite.1	2024-12-07 15:06:53.350518993 +0100
 @@ -0,0 +1,65 @@
 +.TH FLITE 1 "February 25, 2003"
 +.SH NAME
@@ -69,7 +69,7 @@ diff -urNp -x '*.orig' flite-2.2.org/debian/flite.1 flite-2.2/debian/flite.1
 +for the Debian GNU/Linux system (but may be used by others).
 diff -urNp -x '*.orig' flite-2.2.org/debian/flite_time.1 flite-2.2/debian/flite_time.1
 --- flite-2.2.org/debian/flite_time.1	1970-01-01 01:00:00.000000000 +0100
-+++ flite-2.2/debian/flite_time.1	2024-12-07 13:22:05.229828583 +0100
++++ flite-2.2/debian/flite_time.1	2024-12-07 15:06:53.350518993 +0100
 @@ -0,0 +1,24 @@
 +.TH FLITE_TIME 1 "February 25, 2003"
 +.SH NAME
@@ -97,7 +97,7 @@ diff -urNp -x '*.orig' flite-2.2.org/debian/flite_time.1 flite-2.2/debian/flite_
 +for the Debian GNU/Linux system (but may be used by others).
 diff -urNp -x '*.orig' flite-2.2.org/debian/t2p.1 flite-2.2/debian/t2p.1
 --- flite-2.2.org/debian/t2p.1	1970-01-01 01:00:00.000000000 +0100
-+++ flite-2.2/debian/t2p.1	2024-12-07 13:22:05.229828583 +0100
++++ flite-2.2/debian/t2p.1	2024-12-07 15:06:53.350518993 +0100
 @@ -0,0 +1,19 @@
 +.TH T2P 1 "February 25, 2003"
 +.SH NAME
@@ -118,9 +118,22 @@ diff -urNp -x '*.orig' flite-2.2.org/debian/t2p.1 flite-2.2/debian/t2p.1
 +.SH AUTHOR
 +This manual page was written by Mario Lang <mlang@debian.org>,
 +for the Debian GNU/Linux system (but may be used by others).
+diff -urNp -x '*.orig' flite-2.2.org/doc/Makefile flite-2.2/doc/Makefile
+--- flite-2.2.org/doc/Makefile	2024-12-07 15:06:52.826510612 +0100
++++ flite-2.2/doc/Makefile	2024-12-07 15:06:53.350518993 +0100
+@@ -54,6 +54,9 @@ flite.html: flite.texi
+ 	@ if [ -d html/flite ] ; \
+ 	  then mv html/flite/*.html html ; \
+                rmdir html/flite; fi
++	@ if [ -d html/flite_html ] ; \
++	  then mv html/flite_html/*.html html ; \
++	       rmdir html/flite_html; fi
+ 	@ for i in html/*.html ; \
+ 	  do \
+ 	    sed 's/<BODY>/<BODY bgcolor="#ffffff">/' $$i >ttt.html; \
 diff -urNp -x '*.orig' flite-2.2.org/doc/flite.texi flite-2.2/doc/flite.texi
 --- flite-2.2.org/doc/flite.texi	2020-08-13 02:17:09.000000000 +0200
-+++ flite-2.2/doc/flite.texi	2024-12-07 13:22:05.229828583 +0100
++++ flite-2.2/doc/flite.texi	2024-12-07 15:06:53.350518993 +0100
 @@ -16,6 +16,11 @@
  @set UPDATED 18th November 2014
  
@@ -151,3 +164,12 @@ diff -urNp -x '*.orig' flite-2.2.org/doc/flite.texi flite-2.2/doc/flite.texi
  Assuming the shell variable FLITEDIR is set to the flite directory
  the following will compile the system (with appropriate changes for
  your platform if necessary).
+@@ -971,7 +976,7 @@ utterance.  Please note that the @file{i
+ is not set by anyone at all.  The previous sentence exists in the
+ documentation so that I can point at it, when user's fail to read it.
+ 
+-@node Converting FestVox Voices, , APIs, top
++@node Converting FestVox Voices, , APIs, Top
+ @chapter Converting FestVox Voices
+ 
+ As of 1.2 initial scripts have been added to aid the conversion of
