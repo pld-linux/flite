@@ -10,7 +10,7 @@ Summary(pl.UTF-8):	flite - mały, szybki silnik syntezy mowy
 Summary(ru.UTF-8):	flite - маленькое, быстрое средство для синтеза речи
 Name:		flite
 Version:	2.2
-Release:	1
+Release:	2
 License:	Custom, see COPYING
 Group:		Applications/Sound
 #Source0Download: https://github.com/festvox/flite/releases
@@ -21,7 +21,6 @@ Patch0:		%{name}-link.patch
 Patch1:		%{name}-fix-readonly-assignments.patch
 # Debian patches:
 Patch2:		%{name}-doc.patch
-Patch3:		%{name}-version.patch
 #
 Patch5:		%{name}-fix-audiodriver-setup.patch
 URL:		http://www.festvox.org/flite/
@@ -93,7 +92,6 @@ Statyczna biblioteka flite - małego, szybkiego silnika syntezy mowy.
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
-%patch -P3 -p1
 %patch -P5 -p1
 
 %build
